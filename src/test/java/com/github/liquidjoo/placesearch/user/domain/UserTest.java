@@ -25,4 +25,15 @@ class UserTest {
 
         assertThat(same).isTrue();
     }
+
+    @Test
+    @DisplayName("유저 패스워드")
+    void matchPassword() {
+        User actualUser = user;
+        String expectedPassword = "tjdwn";
+
+        boolean same = actualUser.match(expectedPassword);
+
+        assertThat(same).isTrue();
+    }
 }

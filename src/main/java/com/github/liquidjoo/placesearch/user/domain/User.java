@@ -1,5 +1,7 @@
 package com.github.liquidjoo.placesearch.user.domain;
 
+import com.github.liquidjoo.placesearch.utils.PasswordUtils;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -16,7 +18,7 @@ public class User {
     private String password;
 
     public User(final String userId, final String password) {
-        this(null, userId, password);
+        this(null, userId, PasswordUtils.generatePasswordBySecure(password));
     }
 
     private User(final Long id, final String userId, final String password) {
@@ -27,6 +29,10 @@ public class User {
 
     User() {
 
+    }
+
+    public boolean match(final String password) {
+        return this.password.equalsIgnoreCase(PasswordUtils.generatePasswordBySecure(password));
     }
 
     @Override
