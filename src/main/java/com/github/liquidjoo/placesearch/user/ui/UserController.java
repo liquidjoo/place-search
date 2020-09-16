@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -36,15 +39,21 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public ResponseEntity login(@RequestBody UserRequest userRequest) {
+    public ResponseEntity login(@RequestBody UserRequest userRequest, HttpServletRequest httpServletRequest) {
         try {
             logger.info(userRequest.getUserId());
             logger.info(userRequest.getPassword());
             final UserResponse userResponse = userService.login(userRequest);
+            createSession(httpServletRequest.getSession(true), userResponse);
             return new ResponseEntity<>(userResponse, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    private void createSession(HttpSession httpSession, UserResponse userResponse) {
+        httpSession.setAttribute("user", userResponse.getUserId());
+        httpSession.setMaxInactiveInterval(60 * 20);
     }
 
 }
