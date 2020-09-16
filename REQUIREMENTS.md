@@ -17,7 +17,7 @@
     - 로그인 기능
         - userId, password(encryption)
         - password 모듈? 아니면 직접..?
-        - 사용자 데이터는 어플리케이션 시작 시점 (Configuration Bean 등록 처리, script)
+        - 사용자 데이터는 어플리케이션 시작 시점 (ApplicationRunner 활용)
         - 세션 만들기
             - 세션 유지
             - 세션 만료
