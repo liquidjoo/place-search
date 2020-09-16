@@ -29,9 +29,21 @@ public class UserController {
             logger.info(userRequest.getUserId());
             logger.info(userRequest.getPassword());
             final UserResponse userResponse = userService.create(userRequest);
-            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+            return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity login(@RequestBody UserRequest userRequest) {
+        try {
+            logger.info(userRequest.getUserId());
+            logger.info(userRequest.getPassword());
+            final UserResponse userResponse = userService.login(userRequest);
+            return new ResponseEntity<>(userResponse, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
 

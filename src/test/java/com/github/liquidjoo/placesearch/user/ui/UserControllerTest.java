@@ -34,7 +34,6 @@ class UserControllerTest {
     @Test
     @DisplayName("user create api")
     void create() throws Exception {
-
         given(userService.create(any(UserRequest.class)))
                 .willReturn(new UserResponse("tjdwn"));
 
@@ -44,8 +43,24 @@ class UserControllerTest {
         );
 
         resultActions.andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.userId").isString());
 
+    }
+
+    @Test
+    @DisplayName("user login api")
+    void login() throws Exception {
+        given(userService.login(any(UserRequest.class)))
+                .willReturn(new UserResponse("tjdwn"));
+
+        final ResultActions resultActions = mockMvc.perform(post("/user/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"userId\": \"tjdwn\", \"password\":\"1234\"}")
+        );
+
+        resultActions.andDo(print())
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.userId").isString());
     }
 }
