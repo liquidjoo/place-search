@@ -23,14 +23,15 @@
             - 세션 만료
 
 - 장소(local)
+    - 주소(address)
+        - Request
+        - Searchable 역할
+            - Search Service에 요청
+            - AddressResponse 반환
+            
     - 검색(search)
         - Keyword를 래핑한 객체 (Search)
         - Keyword를 가지고 검색할 수 있다.
         - SearchSource 역할
             - Kakao Api를 통한 구현체 ex) KakaoSearchSource
             - Kakao Response 를 통해 SearchResponse 반환
-    - 주소(address)
-        - Request
-        - Searchable 역할
-            - Search Service에 요청
-            - AddressResponse 반환
