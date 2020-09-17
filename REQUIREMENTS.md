@@ -2,7 +2,7 @@
     - id, password를 상태 값으로 가진다.
     - password는 암호화 한다.
     - 정보를 비교하여 로그인 여부를 판단 할 수 있다.
-- 장소(place)
+- 장소(address)
     - 검색한 장소들의 정보를 가지고 있다.
     - 한 장소에 대한 정보를 가지고 있다.
     - 정보를 보여 준다.
@@ -22,15 +22,15 @@
             - 세션 유지
             - 세션 만료
 
-- 장소(place)
+- 장소(local)
     - 검색(search)
         - Keyword를 래핑한 객체 (Search)
         - Keyword를 가지고 검색할 수 있다.
         - SearchSource 역할
             - Kakao Api를 통한 구현체 ex) KakaoSearchSource
             - Kakao Response 를 통해 SearchResponse 반환
-    - 장소(place)
+    - 주소(address)
         - Request
         - Searchable 역할
             - Search Service에 요청
-            - PlaceResponse 반환
+            - AddressResponse 반환
