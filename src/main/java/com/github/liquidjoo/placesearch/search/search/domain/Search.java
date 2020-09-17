@@ -1,4 +1,4 @@
-package com.github.liquidjoo.placesearch.local.search.domain;
+package com.github.liquidjoo.placesearch.search.search.domain;
 
 import java.util.Objects;
 

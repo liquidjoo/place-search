@@ -1,4 +1,4 @@
-package com.github.liquidjoo.placesearch.local.search.infra;
+package com.github.liquidjoo.placesearch.search.search.infra;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

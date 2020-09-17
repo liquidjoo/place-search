@@ -1,4 +1,4 @@
-package com.github.liquidjoo.placesearch.local.search.domain;
+package com.github.liquidjoo.placesearch.search.search.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
