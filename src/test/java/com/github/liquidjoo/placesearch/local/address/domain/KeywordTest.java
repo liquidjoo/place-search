@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class KeywordTest {
 
@@ -37,4 +38,9 @@ class KeywordTest {
         assertThat(same).isTrue();
     }
 
+    @Test
+    @DisplayName("빈 값 유효성 검사")
+    void validateByEmptyQuery() {
+        assertThatIllegalArgumentException().isThrownBy(() -> new Keyword(""));
+    }
 }

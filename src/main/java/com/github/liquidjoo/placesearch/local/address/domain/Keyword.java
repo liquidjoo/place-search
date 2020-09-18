@@ -1,16 +1,25 @@
 package com.github.liquidjoo.placesearch.local.address.domain;
 
+import org.apache.logging.log4j.util.Strings;
+
 import java.util.Objects;
 
 public class Keyword {
     private String query;
 
     public Keyword(final String query) {
+        validate(query);
         this.query = query;
     }
 
     public String getQuery() {
         return query;
+    }
+
+    private void validate(String query) {
+        if (Strings.isBlank(query)) {
+            throw new IllegalArgumentException("검색어를 입력해주세요");
+        }
     }
 
     @Override
