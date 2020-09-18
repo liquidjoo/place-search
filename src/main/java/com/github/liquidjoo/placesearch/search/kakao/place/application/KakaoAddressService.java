@@ -13,7 +13,7 @@ public class KakaoAddressService {
         this.apiRequest = apiRequest;
     }
 
-    public Documents search(String query) {
-        return apiRequest.request(query);
+    public Documents search(String query, int size, int page) {
+        return apiRequest.request(query, size, page);
     }
 }

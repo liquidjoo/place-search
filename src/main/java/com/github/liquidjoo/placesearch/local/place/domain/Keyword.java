@@ -1,19 +1,27 @@
 package com.github.liquidjoo.placesearch.local.place.domain;
 
+import lombok.Getter;
+import lombok.ToString;
 import org.apache.logging.log4j.util.Strings;
 
 import java.util.Objects;
 
+@Getter
+@ToString
 public class Keyword {
     private String query;
+    private int size;
+    private int page;
 
-    public Keyword(final String query) {
+    public Keyword(final String query, final int size, final int page) {
         validate(query);
         this.query = query;
+        this.size = size;
+        this.page = page;
     }
 
-    public String getQuery() {
-        return query;
+    public Keyword(final String query) {
+        this(query, 15, 1);
     }
 
     private void validate(String query) {

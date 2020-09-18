@@ -14,6 +14,6 @@ public class PlaceService {
     }
 
     public PlaceResponse search(Keyword keyword) {
-        return searchable.search(keyword.getQuery());
+        return searchable.search(keyword);
     }
 }

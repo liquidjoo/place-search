@@ -21,9 +21,13 @@ public class PlaceController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity search(@RequestParam(value = "query") String query) {
+    public ResponseEntity search(
+            @RequestParam(value = "query") String query,
+            @RequestParam(value = "size", defaultValue = "15", required = false) int size,
+            @RequestParam(value = "page", defaultValue = "1", required = false) int page
+    ) {
         try {
-            final PlaceResponse response = placeService.search(new Keyword(query));
+            final PlaceResponse response = placeService.search(new Keyword(query, size, page));
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

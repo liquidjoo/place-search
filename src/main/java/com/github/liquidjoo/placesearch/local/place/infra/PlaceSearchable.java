@@ -1,6 +1,7 @@
 package com.github.liquidjoo.placesearch.local.place.infra;
 
 import com.github.liquidjoo.placesearch.local.place.application.PlaceResponse;
+import com.github.liquidjoo.placesearch.local.place.domain.Keyword;
 import com.github.liquidjoo.placesearch.local.place.domain.Searchable;
 import com.github.liquidjoo.placesearch.search.kakao.place.application.KakaoAddressService;
 import com.github.liquidjoo.placesearch.search.kakao.place.domain.Document;
@@ -23,8 +24,8 @@ public class PlaceSearchable implements Searchable {
     }
 
     @Override
-    public PlaceResponse search(final String query) {
-        final Documents documents = kakaoAddressService.search(query);
+    public PlaceResponse search(final Keyword keyword) {
+        final Documents documents = kakaoAddressService.search(keyword.getQuery(), keyword.getSize(), keyword.getPage());
         final List<Document> docs = documents.getDocuments();
 
         return new PlaceResponse(getAddressDocument(docs), getMetaDocument(documents.getMeta()));

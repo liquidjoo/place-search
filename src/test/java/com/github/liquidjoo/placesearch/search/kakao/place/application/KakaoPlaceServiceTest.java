@@ -31,10 +31,10 @@ class KakaoPlaceServiceTest {
     @Test
     void searchTest() throws JsonProcessingException {
         documents = objectMapper.readValue(json, Documents.class);
-        given(apiRequest.request("카카오프렌즈"))
+        given(apiRequest.request("카카오프렌즈", 15, 1))
                 .willReturn(documents);
 
-        final Documents actual = kakaoAddressService.search("카카오프렌즈");
+        final Documents actual = kakaoAddressService.search("카카오프렌즈", 15, 1);
 
         assertThat(actual.getDocuments().size()).isEqualTo(documents.getDocuments().size());
     }

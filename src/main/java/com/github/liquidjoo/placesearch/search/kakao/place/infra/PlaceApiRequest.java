@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class PlaceApiRequest implements ApiRequest<Documents> {
 
-    private static final String URI = "/local/search/keyword.json?query={query}";
+    private static final String URI = "/local/search/keyword.json?query={query}&size={size}&page={page}";
 
     @Value("${kakao.app-key}")
     private String appKey;
@@ -28,14 +28,14 @@ public class PlaceApiRequest implements ApiRequest<Documents> {
     }
 
     @Override
-    public Documents request(String query) {
+    public Documents request(String query, int size, int page) {
         String url = getBaseUrl() + URI;
         final ResponseEntity<Documents> responseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 getEntity(appKey),
                 Documents.class,
-                query
+                query, size, page
         );
         return responseEntity.getBody();
     }

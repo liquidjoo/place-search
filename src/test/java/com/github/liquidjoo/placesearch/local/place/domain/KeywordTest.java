@@ -13,14 +13,14 @@ class KeywordTest {
 
     @BeforeEach
     void setUp() {
-        keyword = new Keyword("전북 삼성동 100");
+        keyword = new Keyword("카카오프렌즈");
     }
 
     @Test
     @DisplayName("객체 비교")
     void equalsToObject() {
         Keyword actual = keyword;
-        Keyword expected = new Keyword("전북 삼성동 100");
+        Keyword expected = new Keyword("카카오프렌즈");
 
         boolean same = actual.equals(expected);
 
@@ -31,7 +31,7 @@ class KeywordTest {
     @DisplayName("쿼리 확인")
     void getQuery() {
         String actualQuery = keyword.getQuery();
-        String expectedQuery = "전북 삼성동 100";
+        String expectedQuery = "카카오프렌즈";
 
         boolean same = actualQuery.equals(expectedQuery);
 

@@ -27,7 +27,7 @@ class PlaceApiRequestTest {
 
     @Test
     void request() {
-        final Documents documents = placeApiRequest.request("카카오프렌즈");
+        final Documents documents = placeApiRequest.request("카카오프렌즈", 15, 1);
         assertAll("documents mapping",
                 () -> assertThat(documents.getDocuments()).isNotNull(),
                 () -> assertThat(documents.getMeta()).isNotNull()
