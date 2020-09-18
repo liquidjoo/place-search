@@ -1,7 +1,7 @@
-package com.github.liquidjoo.placesearch.search.source.kakao.address.infra;
+package com.github.liquidjoo.placesearch.search.kakao.address.infra;
 
-import com.github.liquidjoo.placesearch.search.source.kakao.address.domain.ApiRequest;
-import com.github.liquidjoo.placesearch.search.source.kakao.address.domain.Documents;
+import com.github.liquidjoo.placesearch.search.kakao.address.domain.ApiRequest;
+import com.github.liquidjoo.placesearch.search.kakao.address.domain.Documents;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;

@@ -1,12 +1,11 @@
-package com.github.liquidjoo.placesearch.search.search.domain;
+package com.github.liquidjoo.placesearch.local.address.domain;
 
 import java.util.Objects;
 
-public class Search {
+public class Keyword {
+    private String query;
 
-    private final String query;
-
-    public Search(final String query) {
+    public Keyword(final String query) {
         this.query = query;
     }
 
@@ -18,8 +17,8 @@ public class Search {
     public boolean equals(final Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        final Search search = (Search) object;
-        return Objects.equals(query, search.query);
+        final Keyword keyword = (Keyword) object;
+        return Objects.equals(query, keyword.query);
     }
 
     @Override

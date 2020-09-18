@@ -1,4 +1,4 @@
-package com.github.liquidjoo.placesearch.search.source.kakao.address.domain;
+package com.github.liquidjoo.placesearch.search.kakao.address.domain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
