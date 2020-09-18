@@ -38,11 +38,17 @@ public class AddressResponse {
         private String addressName;
         private String x;
         private String y;
+        private String roadAddressName;
 
-        public AddressDocument(final String addressName, final String x, final String y) {
+        public AddressDocument(final String addressName, final String x, final String y, final String roadAddressName) {
             this.addressName = addressName;
             this.x = x;
             this.y = y;
+            this.roadAddressName = roadAddressName;
+        }
+
+        public AddressDocument(final String addressName, final String x, final String y) {
+            this(addressName, x, y, "");
         }
     }
 

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 @ToString
 @Getter
 public class Document {
@@ -25,6 +27,13 @@ public class Document {
 
     @JsonProperty(value = "y")
     private String y;
+
+    public String getRoadAddressName() {
+        if (Objects.isNull(this.roadAddress)) {
+            return "";
+        }
+        return roadAddress.addressName;
+    }
 
     @ToString
     private static class Address {
@@ -66,6 +75,7 @@ public class Document {
     }
 
     @ToString
+    @Getter
     private static class RoadAddress {
         @JsonProperty(value = "address_name")
         private String addressName;

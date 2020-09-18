@@ -9,6 +9,7 @@ import com.github.liquidjoo.placesearch.search.kakao.address.domain.Meta;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,7 +34,9 @@ public class AddressSearchable implements Searchable {
                 .map(document -> new AddressResponse.AddressDocument(
                         document.getAddressName(),
                         document.getX(),
-                        document.getY()))
+                        document.getY(),
+                        document.getRoadAddressName()
+                ))
                 .collect(Collectors.toList());
     }
 

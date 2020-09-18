@@ -40,7 +40,7 @@ class AddressControllerTest {
     @BeforeEach
     void setUp() {
         final List<AddressResponse.AddressDocument> documents = Arrays.asList(
-                new AddressResponse.AddressDocument("my home", "123.145", "556.745"),
+                new AddressResponse.AddressDocument("my home", "123.145", "556.745", "roadName"),
                 new AddressResponse.AddressDocument("my home1", "123.53245", "556.678"),
                 new AddressResponse.AddressDocument("my home2", "123.2345", "556.44564"),
                 new AddressResponse.AddressDocument("my home3", "123.234", "556.23424")
