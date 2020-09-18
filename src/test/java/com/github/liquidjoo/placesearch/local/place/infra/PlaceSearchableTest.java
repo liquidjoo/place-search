@@ -43,7 +43,7 @@ class PlaceSearchableTest {
         final PlaceResponse response = placeSearchable.search(new Keyword("카카오프렌즈"));
 
         assertAll("response",
-                () -> assertThat(response.getAddressDocuments().size()).isEqualTo(documents.getDocuments().size()),
+                () -> assertThat(response.getPlaceDocuments().size()).isEqualTo(documents.getDocuments().size()),
                 () -> assertThat(response.getMetaDocument()).isNotNull(),
                 () -> assertThat(response.getMetaDocument().getTotalCount()).isEqualTo(documents.getMeta().getTotalCount())
         );

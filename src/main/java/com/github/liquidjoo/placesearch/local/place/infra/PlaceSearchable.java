@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Component
 public class PlaceSearchable implements Searchable {
 
-    private static final String DAUM_MAP_LINK = "https://map.kakao.com/link/map/{%s}";
+    private static final String DAUM_MAP_LINK = "https://map.kakao.com/link/map/%s";
 
     private final KakaoAddressService kakaoAddressService;
 
@@ -28,10 +28,10 @@ public class PlaceSearchable implements Searchable {
         final Documents documents = kakaoAddressService.search(keyword.getQuery(), keyword.getSize(), keyword.getPage());
         final List<Document> docs = documents.getDocuments();
 
-        return new PlaceResponse(getAddressDocument(docs), getMetaDocument(documents.getMeta()));
+        return new PlaceResponse(getPlaceDocument(docs), getMetaDocument(documents.getMeta()));
     }
 
-    private List<PlaceResponse.PlaceDocument> getAddressDocument(List<Document> documents) {
+    private List<PlaceResponse.PlaceDocument> getPlaceDocument(List<Document> documents) {
         return documents.stream()
                 .map(document -> new PlaceResponse.PlaceDocument(
                         document.getPlaceName(),

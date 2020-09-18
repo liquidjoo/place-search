@@ -9,16 +9,16 @@ import java.util.List;
 @ToString
 public class PlaceResponse {
 
-    private final List<PlaceDocument> addressDocuments;
+    private final List<PlaceDocument> placeDocuments;
     private final MetaDocument metaDocument;
 
-    public PlaceResponse(final List<PlaceDocument> addressDocuments, final MetaDocument metaDocument) {
-        this.addressDocuments = addressDocuments;
+    public PlaceResponse(final List<PlaceDocument> placeDocuments, final MetaDocument metaDocument) {
+        this.placeDocuments = placeDocuments;
         this.metaDocument = metaDocument;
     }
 
-    public List<PlaceDocument> getAddressDocuments() {
-        return new ArrayList<>(addressDocuments);
+    public List<PlaceDocument> getPlaceDocuments() {
+        return new ArrayList<>(placeDocuments);
     }
 
     public MetaDocument getMetaDocument() {
