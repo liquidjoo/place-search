@@ -1,6 +1,6 @@
 package com.github.liquidjoo.placesearch.search.search.infra;
 
-import com.github.liquidjoo.placesearch.search.source.kakao.domain.Documents;
+import com.github.liquidjoo.placesearch.search.source.kakao.address.domain.Documents;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.*;

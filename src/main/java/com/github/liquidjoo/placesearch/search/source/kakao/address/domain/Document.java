@@ -1,4 +1,4 @@
-package com.github.liquidjoo.placesearch.search.source.kakao.domain;
+package com.github.liquidjoo.placesearch.search.source.kakao.address.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
