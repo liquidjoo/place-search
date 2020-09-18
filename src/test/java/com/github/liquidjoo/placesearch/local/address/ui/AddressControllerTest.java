@@ -52,7 +52,7 @@ class AddressControllerTest {
     }
 
     @Test
-    @DisplayName("주소 검색 결과")
+    @DisplayName("주소 검색 결과 페이징")
     void searchByAddress() throws Exception {
         given(addressService.search(any(Keyword.class)))
                 .willReturn(addressResponse);
@@ -64,15 +64,13 @@ class AddressControllerTest {
 
         resultActions.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.addressDocuments").isArray())
-                .andExpect(jsonPath("$.addressDocuments[0].addressName").isString())
-                .andExpect(jsonPath("$.addressDocuments[0].x").isString())
-                .andExpect(jsonPath("$.addressDocuments[0].y").isString())
-
-                .andExpect(jsonPath("$.metaDocument").isMap())
-                .andExpect(jsonPath("$.metaDocument.pageableCount").isNumber())
-                .andExpect(jsonPath("$.metaDocument.totalCount").isNumber())
-                .andExpect(jsonPath("$.metaDocument.end").isBoolean());
+                .andExpect(jsonPath("$.content").isArray())
+                .andExpect(jsonPath("$.content[0].addressName").isString())
+                .andExpect(jsonPath("$.pageable").isMap())
+                .andExpect(jsonPath("$.totalPages").isNumber())
+                .andExpect(jsonPath("$.totalElements").isNumber())
+                .andExpect(jsonPath("$.last").isBoolean());
 
     }
+
 }
