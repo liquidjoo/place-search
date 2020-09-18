@@ -2,7 +2,7 @@
     - id, password를 상태 값으로 가진다.
     - password는 암호화 한다.
     - 정보를 비교하여 로그인 여부를 판단 할 수 있다.
-- 장소(address)
+- 장소(place)
     - 검색한 장소들의 정보를 가지고 있다.
     - 한 장소에 대한 정보를 가지고 있다.
     - 정보를 보여 준다.
@@ -22,8 +22,8 @@
             - 세션 유지
             - 세션 만료
 
-- 장소(local)
-    - 주소(address)
+- 지(local)
+    - 장소(place)
         - query를 래핑한 객체 (Keyword)
         - Keyword를 가지고 검색할 수 있다.
         - Request
