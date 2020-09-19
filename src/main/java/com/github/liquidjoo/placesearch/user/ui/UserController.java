@@ -41,11 +41,9 @@ public class UserController {
     @PostMapping(value = "/login")
     public ResponseEntity login(@RequestBody UserRequest userRequest, HttpServletRequest httpServletRequest) {
         try {
-            logger.info(userRequest.getUserId());
-            logger.info(userRequest.getPassword());
             final UserResponse userResponse = userService.login(userRequest);
             createSession(httpServletRequest.getSession(true), userResponse);
-            return new ResponseEntity<>(userResponse, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }

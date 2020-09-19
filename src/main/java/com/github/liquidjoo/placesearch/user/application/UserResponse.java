@@ -1,5 +1,8 @@
 package com.github.liquidjoo.placesearch.user.application;
 
+import lombok.ToString;
+
+@ToString
 public class UserResponse {
 
     private String userId;
@@ -10,10 +13,5 @@ public class UserResponse {
 
     public String getUserId() {
         return userId;
-    }
-
-    @Override
-    public String toString() {
-        return "User [userId=" + userId + "]";
     }
 }

@@ -1,10 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+    <title>Hello, Search!</title>
 </head>
 <body>
-$END$
+<h1>Hello, Search!</h1>
+
+<form id="searchForm">
+    <div class="form-group row">
+        <label for="query" class="col-sm-2 col-form-label">query</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="query" name="query">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <input id="submit" type="button" class="btn btn-primary" onclick="search()">Sign in</input>
+        </div>
+    </div>
+</form>
+
+<div class="list-group" id="searchList">
+</div>
+
+<script>
+    function search() {
+        const formData = {
+            query: $(`#query`).val()
+        };
+
+        $.ajax({
+            type: 'get',
+            url: '/place/search',
+            data: formData,
+            contentType: "application/json",
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (json) {
+                $(`#searchList`).empty();
+
+                const makeModal = (item, index) => {
+                    $(`#detail${index}`).remove();
+                    return  $("body").append(
+                        `<div id="detail${index}" class="modal">
+                            <p>${item.placeName}</p>
+                            <p>${item.addressName}</p>
+                            <p>${item.roadAddressName}</p>
+                            <p>${item.phone}</p>
+                            <p>${item.placeUrl}</p>
+                            <p>${item.linkUrl}</p>
+                            <p>${item.categoryName}</p>
+                            <a href="#" rel="modal:close">닫기</a>
+                        </div>`
+                    )
+                };
+
+                json.placeDocuments.map((item, index) => {
+                    makeModal(item, index);
+                    return $(`#searchList`).append(
+                        `<a href=\"#detail${index}" rel='modal:open' class=\"list-group-item list-group-item-action\">
+                            <div class=\"d-flex w-100 justify-content-between\">
+                              <h5 class=\"mb-1\"> ${item.placeName} </h5>
+                            </div>
+                            <p class=\"mb-1\">${item.addressName}</p>
+                            <small>${item.roadAddressName}</small>
+                        </a>`
+                    )
+                });
+            }
+        });
+
+    }
+</script>
+
 </body>
 </html>
