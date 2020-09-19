@@ -22,7 +22,7 @@
             - 세션 유지
             - 세션 만료
 
-- 지(local)
+- 지역(local)
     - 장소(place)
         - query를 래핑한 객체 (Keyword)
         - Keyword를 가지고 검색할 수 있다.
@@ -38,4 +38,8 @@
             - address context
                 - anti corruption pattern (infra 구현체)  
                 
-        - 각 api에 대한 response 맵핑  
+        - 각 api에 대한 response 맵핑
+        
+- 화면(view)
+    - 별도의 Context로 분리
+    - 클라이언트 구현에 Javascript 사용
