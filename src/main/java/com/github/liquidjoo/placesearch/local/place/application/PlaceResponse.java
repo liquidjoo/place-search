@@ -53,11 +53,15 @@ public class PlaceResponse {
         private boolean isEnd;
         private int pageableCount;
         private int totalCount;
+        private int size;
+        private int page;
 
-        public MetaDocument(final boolean isEnd, final int pageableCount, final int totalCount) {
+        public MetaDocument(final boolean isEnd, final int pageableCount, final int totalCount, final int size, final int page) {
             this.isEnd = isEnd;
             this.pageableCount = pageableCount;
             this.totalCount = totalCount;
+            this.size = size;
+            this.page = page;
         }
     }
 }

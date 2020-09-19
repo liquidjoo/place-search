@@ -28,7 +28,7 @@ public class PlaceSearchable implements Searchable {
         final Documents documents = kakaoAddressService.search(keyword.getQuery(), keyword.getSize(), keyword.getPage());
         final List<Document> docs = documents.getDocuments();
 
-        return new PlaceResponse(getPlaceDocument(docs), getMetaDocument(documents.getMeta()));
+        return new PlaceResponse(getPlaceDocument(docs), getMetaDocument(documents.getMeta(), keyword));
     }
 
     private List<PlaceResponse.PlaceDocument> getPlaceDocument(List<Document> documents) {
@@ -45,7 +45,8 @@ public class PlaceSearchable implements Searchable {
                 .collect(Collectors.toList());
     }
 
-    private PlaceResponse.MetaDocument getMetaDocument(Meta meta) {
-        return new PlaceResponse.MetaDocument(meta.isEnd(), meta.getPageableCount(), meta.getTotalCount());
+    private PlaceResponse.MetaDocument getMetaDocument(Meta meta, Keyword keyword) {
+        return new PlaceResponse.MetaDocument(meta.isEnd(), meta.getPageableCount(), meta.getTotalCount(),
+                keyword.getSize(), keyword.getPage());
     }
 }

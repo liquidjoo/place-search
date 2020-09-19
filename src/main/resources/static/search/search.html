@@ -45,6 +45,11 @@
 <div class="list-group" id="searchList">
 </div>
 
+<nav aria-label="Page navigation example">
+    <ul class="pagination" id="pages">
+    </ul>
+</nav>
+
 <script>
     function search() {
         const formData = {
@@ -62,9 +67,69 @@
             success: function (json) {
                 $(`#searchList`).empty();
 
+                const meta = json.metaDocument;
+
+                paging(meta.totalCount, meta.page);
+
                 const makeModal = (item, index) => {
                     $(`#detail${index}`).remove();
-                    return  $("body").append(
+                    return $("body").append(
+                        `<div id="detail${index}" class="modal">
+                            <p>${item.placeName}</p>
+                            <p>${item.addressName}</p>
+                            <p>${item.roadAddressName}</p>
+                            <p>${item.phone}</p>
+                            <p>${item.placeUrl}</p>
+                            <p>${item.linkUrl}</p>
+                            <p>${item.categoryName}</p>
+                            <a href="#" rel="modal:close">닫기</a>
+                        </div>`
+                    )
+                };
+
+                json.placeDocuments.map((item, index) => {
+                    makeModal(item, index);
+                    return $(`#searchList`).append(
+                        `<a href=\"#detail${index}" rel='modal:open' class=\"list-group-item list-group-item-action\">
+                            <div class=\"d-flex w-100 justify-content-between\">
+                              <h5 class=\"mb-1\"> ${item.placeName} </h5>
+                            </div>
+                            <p class=\"mb-1\">${item.addressName}</p>
+                            <small>${item.roadAddressName}</small>
+                        </a>`
+                    )
+                });
+            }
+        });
+    }
+
+    function searchPaging(page) {
+
+        const formData = {
+            query: $(`#query`).val(),
+            page : page
+        };
+
+        $.ajax({
+            type: 'get',
+            url: '/place/search',
+            data: formData,
+            contentType: "application/json",
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (json) {
+                $(`#searchList`).empty();
+                const meta = json.metaDocument;
+                if (meta.end) {
+                    alert("조회할 수 있는 마지막 페이지 입니다.");
+                }
+
+                paging(meta.totalCount, meta.page);
+
+                const makeModal = (item, index) => {
+                    $(`#detail${index}`).remove();
+                    return $("body").append(
                         `<div id="detail${index}" class="modal">
                             <p>${item.placeName}</p>
                             <p>${item.addressName}</p>
@@ -94,6 +159,51 @@
         });
 
     }
+
+    function paging(totalData, currentPage) {
+        const dataPerPage = 10;
+        const pageCount = 5;
+
+        const totalPage = Math.ceil(totalData / dataPerPage);
+        const pageGroup = Math.ceil(currentPage / pageCount);
+
+        let last = pageGroup * pageCount;
+
+        if (last > totalPage) {
+            last = totalPage;
+        }
+
+        let first = last - (pageCount - 1);
+
+        const prev = first + 1;
+        const next = last + 1;
+
+        if (totalPage < 1) {
+            first = last;
+        }
+
+
+        const pages = $(`#pages`);
+
+        pages.empty();
+
+        if (first > 5) {
+            pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(${prev})">prev</a></li>`);
+        }
+
+        for (let i = first; i <= last; i++) {
+            if (currentPage === i) {
+                pages.append(`<li class="page-item active"><a class="page-link" onclick="searchPaging(${i})">${i}</a></li>`);
+            } else if (i > 0) {
+                pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(${i})">${i}</a></li>`);
+            }
+        }
+
+        if (next > 5 && next < totalPage) {
+            pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(${next})">next</a></li>`);
+        }
+    }
+
 </script>
 
 </body>

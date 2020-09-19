@@ -47,7 +47,7 @@ class PlaceControllerTest {
 
         );
 
-        final PlaceResponse.MetaDocument metaDocument = new PlaceResponse.MetaDocument(true, 4, 4);
+        final PlaceResponse.MetaDocument metaDocument = new PlaceResponse.MetaDocument(true, 4, 4, 15, 1);
 
         placeResponse = new PlaceResponse(documents, metaDocument);
     }
