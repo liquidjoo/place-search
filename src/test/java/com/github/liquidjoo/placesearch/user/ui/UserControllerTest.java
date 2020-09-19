@@ -60,7 +60,7 @@ class UserControllerTest {
         );
 
         resultActions.andDo(print())
-                .andExpect(status().isAccepted())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userId").isString());
     }
 }

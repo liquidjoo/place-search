@@ -65,8 +65,8 @@ class PlaceControllerTest {
 
         resultActions.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.addressDocuments").isArray())
-                .andExpect(jsonPath("$.addressDocuments[0].addressName").isString());
+                .andExpect(jsonPath("$.placeDocuments").isArray())
+                .andExpect(jsonPath("$.placeDocuments[0].addressName").isString());
 
     }
 
