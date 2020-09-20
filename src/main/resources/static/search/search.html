@@ -73,6 +73,7 @@
         if (keyword == null) {
             query = $(`#query`).val();
         } else {
+            $(`#query`).val(keyword);
             query = keyword;
         }
 
@@ -100,9 +101,9 @@
 
                 paging(meta.totalCount, meta.page);
 
-                const makeModal = (item, index) => {
+                json.placeDocuments.map((item, index) => {
                     $(`#detail${index}`).remove();
-                    return $("body").append(
+                    $("body").append(
                         `<div id="detail${index}" class="modal">
                             <p>${item.placeName}</p>
                             <p>${item.addressName}</p>
@@ -113,11 +114,8 @@
                             <p>${item.categoryName}</p>
                             <a href="#" rel="modal:close">닫기</a>
                         </div>`
-                    )
-                };
+                    );
 
-                json.placeDocuments.map((item, index) => {
-                    makeModal(item, index);
                     return $(`#searchList`).append(
                         `<a href=\"#detail${index}" rel='modal:open' class=\"list-group-item list-group-item-action\">
                             <div class=\"d-flex w-100 justify-content-between\">
