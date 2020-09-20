@@ -22,7 +22,7 @@ class KakaoPlaceServiceTest {
     private ApiRequest apiRequest;
 
     @InjectMocks
-    private KakaoAddressService kakaoAddressService;
+    private KakaoPlaceService kakaoPlaceService;
 
     private ObjectMapper objectMapper;
     private String json;
@@ -36,7 +36,7 @@ class KakaoPlaceServiceTest {
         given(apiRequest.request("카카오프렌즈", 15, 1))
                 .willReturn(documents);
 
-        final Documents actual = kakaoAddressService.search("카카오프렌즈", 15, 1);
+        final Documents actual = kakaoPlaceService.search("카카오프렌즈", 15, 1);
 
         assertThat(actual.getDocuments().size()).isEqualTo(documents.getDocuments().size());
     }

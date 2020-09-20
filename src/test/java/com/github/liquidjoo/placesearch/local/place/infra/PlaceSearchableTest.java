@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.liquidjoo.placesearch.local.place.application.PlaceResponse;
 import com.github.liquidjoo.placesearch.local.place.domain.Keyword;
-import com.github.liquidjoo.placesearch.search.kakao.place.application.KakaoAddressService;
+import com.github.liquidjoo.placesearch.search.kakao.place.application.KakaoPlaceService;
 import com.github.liquidjoo.placesearch.search.kakao.place.domain.Documents;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ import static org.mockito.BDDMockito.given;
 class PlaceSearchableTest {
 
     @Mock
-    private KakaoAddressService kakaoAddressService;
+    private KakaoPlaceService kakaoPlaceService;
 
     @InjectMocks
     private PlaceSearchable placeSearchable;
@@ -37,7 +37,7 @@ class PlaceSearchableTest {
     void mappingBySearchResponse() throws JsonProcessingException {
         documents = objectMapper.readValue(json, Documents.class);
 
-        given(kakaoAddressService.search("카카오프렌즈", 15, 1))
+        given(kakaoPlaceService.search("카카오프렌즈", 15, 1))
                 .willReturn(documents);
 
         final PlaceResponse response = placeSearchable.search(new Keyword("카카오프렌즈"));

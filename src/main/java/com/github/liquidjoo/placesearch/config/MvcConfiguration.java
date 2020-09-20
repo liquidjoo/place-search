@@ -14,7 +14,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
 
         registry.addInterceptor(new LoginInterceptor())
                 .excludePathPatterns("/user/**", "/login")
-                .addPathPatterns("/place/**", "/search");
+                .addPathPatterns("/search");
 
         registry.addInterceptor(new KeywordInterceptor())
                 .addPathPatterns("/place/search");

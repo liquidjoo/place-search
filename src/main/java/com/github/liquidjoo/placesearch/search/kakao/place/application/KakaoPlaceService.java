@@ -5,11 +5,11 @@ import com.github.liquidjoo.placesearch.search.kakao.place.domain.Documents;
 import org.springframework.stereotype.Service;
 
 @Service
-public class KakaoAddressService {
+public class KakaoPlaceService {
 
     private final ApiRequest<Documents> apiRequest;
 
-    public KakaoAddressService(final ApiRequest apiRequest) {
+    public KakaoPlaceService(final ApiRequest apiRequest) {
         this.apiRequest = apiRequest;
     }
 
