@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
+
+    <title>Search</title>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h1>Hello, Search!</h1>
+        <form id="searchForm" class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" id="query" name="query">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="searchPaging(null, 1)">Search</button>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Popular Keywords Rank</span>
+                <span class="badge badge-secondary badge-pill">10</span>
+            </h4>
+
+            <ul class="list-group mb-3" id="popularList">
+
+            </ul>
+        </div>
+        <div class="col-md-8 order-md-1">
+            <span class="text-muted">Search Result</span>
+            <div class="list-group" id="searchList">
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="my-5 pt-5 text-muted center text-small">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pages">
+            </ul>
+        </nav>
+    </footer>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+<script>
+
+    function searchPaging(keyword, page) {
+
+        let query;
+        if (keyword == null) {
+            query = $(`#query`).val();
+        } else {
+            $(`#query`).val(keyword);
+            query = keyword;
+        }
+
+        console.log(keyword);
+        const formData = {
+            query: query,
+            page: page
+        };
+
+
+        $.ajax({
+            type: 'get',
+            url: '/place/search',
+            data: formData,
+            contentType: "application/json",
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (json) {
+                $(`#searchList`).empty();
+                const meta = json.metaDocument;
+                if (meta.end) {
+                    alert("조회할 수 있는 마지막 페이지 입니다.");
+                }
+
+                paging(meta.totalCount, meta.page);
+
+                json.placeDocuments.map((item, index) => {
+                    $(`#detail${index}`).remove();
+                    $("body").append(
+                        `<div id="detail${index}" class="modal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">${item.placeName}</h5>
+                                  </div>
+
+                                  <div class="modal-header">
+                                    <small>${item.categoryName}</small>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    <dl>
+                                        <dt>주소</dt>
+                                        <dd>${item.addressName}</dd><br>
+
+                                        <dt>도로명 주소</dt>
+                                        <dd>${item.roadAddressName}</dd><br>
+
+                                        <dt>번호</dt>
+                                        <dd>${item.phone}</dd><br>
+
+                                        <dt>장소 상세 정보</dt>
+                                        <dd><a href="${item.placeUrl}" target="_blank">${item.placeUrl}</a></dd><br>
+                                    </dl>
+
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="window.open('${item.linkUrl}')">지도 바로가기</button>
+                                    <a href="#" rel="modal:close">닫기</a>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>`
+                    );
+
+                    return $(`#searchList`).append(
+                        `<a href=\"#detail${index}" rel='modal:open' class=\"list-group-item list-group-item-action\">
+                            <div class=\"d-flex w-100 justify-content-between\">
+                              <h5 class=\"mb-1\"> ${item.placeName} </h5>
+                            </div>
+                            <p class=\"mb-1\">${item.addressName}</p>
+                            <small>${item.roadAddressName}</small>
+                        </a>`
+                    )
+                });
+            }
+        });
+    }
+
+    function paging(totalData, currentPage) {
+        const dataPerPage = 10;
+        const pageCount = 5;
+
+        const totalPage = Math.ceil(totalData / dataPerPage);
+        const pageGroup = Math.ceil(currentPage / pageCount);
+
+        let last = pageGroup * pageCount;
+
+        if (last > totalPage) {
+            last = totalPage;
+        }
+
+        let first = last - (pageCount - 1);
+
+        const prev = first + 1;
+        const next = last + 1;
+
+        if (totalPage < 1) {
+            first = last;
+        }
+
+
+        const pages = $(`#pages`);
+
+        pages.empty();
+
+        if (first > 5) {
+            pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(null, ${prev})">prev</a></li>`);
+        }
+
+        for (let i = first; i <= last; i++) {
+            if (currentPage === i) {
+                pages.append(`<li class="page-item active"><a class="page-link" onclick="searchPaging(null, ${i})">${i}</a></li>`);
+            } else if (i > 0) {
+                pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(null, ${i})">${i}</a></li>`);
+            }
+        }
+
+        if (next > 5 && next < totalPage) {
+            pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(null, ${next})">next</a></li>`);
+        }
+    }
+
+</script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'get',
+            url: '/place/popular/keywords',
+            contentType: "application/json",
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (json) {
+                $(`#popularList`).empty();
+                json.keywordsDocuments.map((item, index) => {
+                    const keyword = `'${item.keyword}'`;
+                    $(`#popularList`).append(
+                        `<li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <a class="my-0" onclick="searchPaging(${keyword}, 1)">${item.keyword}</a>
+                            </div>
+                            <span class="text-muted">${item.count}</span>
+                        </li>`
+                    )
+                })
+            }
+        })
+    })
+</script>
+</body>
+</html>
