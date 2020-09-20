@@ -29,7 +29,12 @@
         - Request
         - Searchable 역할
             - Search Service에 요청
-            - AddressResponse 반환
+            - PlaceResponse 반환
+            
+        - 인기 검색어 목록
+            - 인터셉터 or 서비스 내에서 로직 구현
+            - 우선 순위 큐 활용
+        
             
 - 검색(search)
     - 검색 인터페이스, 다른 api로 언제든 교체 가능
