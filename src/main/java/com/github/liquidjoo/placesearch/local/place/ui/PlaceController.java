@@ -2,6 +2,7 @@ package com.github.liquidjoo.placesearch.local.place.ui;
 
 import com.github.liquidjoo.placesearch.local.place.application.PlaceResponse;
 import com.github.liquidjoo.placesearch.local.place.application.PlaceService;
+import com.github.liquidjoo.placesearch.local.place.application.PopularKeywordsResponse;
 import com.github.liquidjoo.placesearch.local.place.domain.Keyword;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,16 @@ public class PlaceController {
     ) {
         try {
             final PlaceResponse response = placeService.search(new Keyword(query, size, page));
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/popular/keywords")
+    public ResponseEntity getKeywords() {
+        try {
+            final PopularKeywordsResponse response = placeService.getKeywords();
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

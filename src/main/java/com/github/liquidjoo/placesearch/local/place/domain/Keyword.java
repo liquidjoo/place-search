@@ -4,13 +4,28 @@ import lombok.Getter;
 import lombok.ToString;
 import org.apache.logging.log4j.util.Strings;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
 @ToString
+@Entity
+@Table(name = "keyword")
 public class Keyword {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
     private String query;
+
+    @Column
+    private int count;
+
+    @Transient
     private int size;
+    @Transient
     private int page;
 
     public Keyword(final String query, final int size, final int page) {
@@ -18,16 +33,30 @@ public class Keyword {
         this.query = query;
         this.size = size;
         this.page = page;
+        this.count = 1;
     }
 
     public Keyword(final String query) {
         this(query, 15, 1);
     }
 
+    public Keyword(final String query, int count) {
+        this(query, 15, 1);
+        this.count = count;
+    }
+
+    Keyword() {
+
+    }
+
     private void validate(String query) {
         if (Strings.isBlank(query)) {
             throw new IllegalArgumentException("검색어를 입력해주세요");
         }
+    }
+
+    void increaseCount() {
+        this.count++;
     }
 
     @Override

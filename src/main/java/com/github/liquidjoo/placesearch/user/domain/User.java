@@ -13,8 +13,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String userId;
 
+    @Column
     private String password;
 
     public User(final String userId, final String password) {
