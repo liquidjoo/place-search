@@ -2,6 +2,7 @@ package com.github.liquidjoo.placesearch;
 
 import com.github.liquidjoo.placesearch.local.place.domain.Keyword;
 import com.github.liquidjoo.placesearch.local.place.domain.KeywordRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Component
 public class PopularKeywordsRunner implements ApplicationRunner {
 
@@ -20,6 +22,7 @@ public class PopularKeywordsRunner implements ApplicationRunner {
 
     @Override
     public void run(final ApplicationArguments args) throws Exception {
+        log.info("initialize popular keywords");
         initKeywords();
     }
 

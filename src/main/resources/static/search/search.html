@@ -9,59 +9,79 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-            crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-
-    <title>Hello, Search!</title>
+    <title>Search</title>
 </head>
 <body>
-<h1>Hello, Search!</h1>
+<div class="container">
+    <div class="py-5 text-center">
+        <h1>Hello, Search!</h1>
+        <form id="searchForm" class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" id="query" name="query">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="searchPaging(null, 1)">Search</button>
+        </form>
+    </div>
 
-<form id="searchForm">
-    <div class="form-group row">
-        <label for="query" class="col-sm-2 col-form-label">query</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="query" name="query">
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Popular Keywords Rank</span>
+                <span class="badge badge-secondary badge-pill">10</span>
+            </h4>
+
+            <ul class="list-group mb-3" id="popularList">
+
+            </ul>
+        </div>
+        <div class="col-md-8 order-md-1">
+            <span class="text-muted">Search Result</span>
+            <div class="list-group" id="searchList">
+            </div>
         </div>
     </div>
 
-    <div class="form-group row">
-        <div class="col-sm-10">
-            <input id="submit" type="button" class="btn btn-primary" onclick="searchPaging(1)">Sign in</input>
-        </div>
-    </div>
-</form>
 
-<ul class="list-group" id="popularList">
+    <footer class="my-5 pt-5 text-muted center text-small">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="pages">
+            </ul>
+        </nav>
+    </footer>
 
-</ul>
-
-<div class="list-group" id="searchList">
 </div>
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination" id="pages">
-    </ul>
-</nav>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 
 <script>
 
-    function searchPaging(page) {
+    function searchPaging(keyword ,page) {
 
+        let query;
+        if (keyword == null) {
+            query = $(`#query`).val();
+        } else {
+            query = keyword;
+        }
+
+        console.log(keyword);
         const formData = {
-            query: $(`#query`).val(),
+            query: query,
             page: page
         };
+
 
         $.ajax({
             type: 'get',
@@ -140,26 +160,25 @@
         pages.empty();
 
         if (first > 5) {
-            pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(${prev})">prev</a></li>`);
+            pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(null, ${prev})">prev</a></li>`);
         }
 
         for (let i = first; i <= last; i++) {
             if (currentPage === i) {
-                pages.append(`<li class="page-item active"><a class="page-link" onclick="searchPaging(${i})">${i}</a></li>`);
+                pages.append(`<li class="page-item active"><a class="page-link" onclick="searchPaging(null, ${i})">${i}</a></li>`);
             } else if (i > 0) {
-                pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(${i})">${i}</a></li>`);
+                pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(null, ${i})">${i}</a></li>`);
             }
         }
 
         if (next > 5 && next < totalPage) {
-            pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(${next})">next</a></li>`);
+            pages.append(`<li class="page-item"><a class="page-link" onclick="searchPaging(null, ${next})">next</a></li>`);
         }
     }
 
 </script>
 <script>
     $(document).ready(function () {
-
         $.ajax({
             type: 'get',
             url: '/place/popular/keywords',
@@ -170,10 +189,13 @@
             success: function (json) {
                 $(`#popularList`).empty();
                 json.keywordsDocuments.map((item, index) => {
+                    const keyword = `'${item.keyword}'`;
                     $(`#popularList`).append(
-                        `<li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="badge badge-primary badge-pill">${item.count}</span>
-                            ${item.keyword}
+                        `<li class="list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <a class="my-0" onclick="searchPaging(${keyword}, 1)">${item.keyword}</a>
+                            </div>
+                            <span class="text-muted">${item.count}</span>
                         </li>`
                     )
                 })
