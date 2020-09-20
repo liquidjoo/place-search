@@ -13,8 +13,8 @@ public class MvcConfiguration implements WebMvcConfigurer {
     public void addInterceptors(final InterceptorRegistry registry) {
 
         registry.addInterceptor(new LoginInterceptor())
-                .excludePathPatterns("/user/**")
-                .addPathPatterns("/**");
+                .excludePathPatterns("/user/**", "/login")
+                .addPathPatterns("/place/**", "/search");
 
         registry.addInterceptor(new KeywordInterceptor())
                 .addPathPatterns("/place/search");

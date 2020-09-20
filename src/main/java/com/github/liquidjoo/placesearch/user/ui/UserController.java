@@ -51,7 +51,7 @@ public class UserController {
 
     private void createSession(HttpSession httpSession, UserResponse userResponse) {
         httpSession.setAttribute("user", userResponse.getUserId());
-        httpSession.setMaxInactiveInterval(60 * 20);
+        httpSession.setMaxInactiveInterval(60 * 30);
     }
 
 }

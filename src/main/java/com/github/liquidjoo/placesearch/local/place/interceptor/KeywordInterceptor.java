@@ -14,25 +14,25 @@ public class KeywordInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
 
-        final String[] split = request.getQueryString().split("&");
-        final String query = Arrays.stream(split)
-                .filter(keyword -> keyword.contains("query"))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘 못 요청된 쿼리 입니다."));
+        try {
+            final String[] split = request.getQueryString().split("&");
+            final String query = Arrays.stream(split)
+                    .filter(keyword -> keyword.contains("query"))
+                    .findAny()
+                    .orElseThrow(() -> new IllegalArgumentException("잘 못 요청된 쿼리 입니다."));
 
-        final String[] splitQuery = query.split("=");
+            final String[] splitQuery = query.split("=");
+            final String value = splitQuery[1];
 
-        if (splitQuery.length < 2) {
+            if (Strings.isBlank(value)) {
+                return false;
+            }
+
+            KeywordCache.add(URLDecoder.decode(value, "UTF-8"));
+        } catch (Exception e) {
             return false;
         }
 
-        final String value = splitQuery[1];
-        if (Strings.isBlank(value)) {
-            return false;
-        }
-
-        KeywordCache.add(URLDecoder.decode(value, "UTF-8"));
-        System.out.println(URLDecoder.decode(value, "UTF-8"));
         return super.preHandle(request, response, handler);
     }
 }

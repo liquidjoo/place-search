@@ -19,6 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         final Object user = httpSession.getAttribute("user");
         if (Objects.isNull(user)) {
             logger.info("redirect login page");
+            response.sendRedirect("/login");
         }
         return super.preHandle(request, response, handler);
     }
