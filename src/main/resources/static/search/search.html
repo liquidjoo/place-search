@@ -67,7 +67,7 @@
 
 <script>
 
-    function searchPaging(keyword ,page) {
+    function searchPaging(keyword, page) {
 
         let query;
         if (keyword == null) {
@@ -105,14 +105,39 @@
                     $(`#detail${index}`).remove();
                     $("body").append(
                         `<div id="detail${index}" class="modal">
-                            <p>${item.placeName}</p>
-                            <p>${item.addressName}</p>
-                            <p>${item.roadAddressName}</p>
-                            <p>${item.phone}</p>
-                            <p>${item.placeUrl}</p>
-                            <p>${item.linkUrl}</p>
-                            <p>${item.categoryName}</p>
-                            <a href="#" rel="modal:close">닫기</a>
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">${item.placeName}</h5>
+                                  </div>
+
+                                  <div class="modal-header">
+                                    <small>${item.categoryName}</small>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    <dl>
+                                        <dt>주소</dt>
+                                        <dd>${item.addressName}</dd><br>
+
+                                        <dt>도로명 주소</dt>
+                                        <dd>${item.roadAddressName}</dd><br>
+
+                                        <dt>번호</dt>
+                                        <dd>${item.phone}</dd><br>
+
+                                        <dt>장소 상세 정보</dt>
+                                        <dd><a href="${item.placeUrl}" target="_blank">${item.placeUrl}</a></dd><br>
+                                    </dl>
+
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" onclick="window.open('${item.linkUrl}')">지도 바로가기</button>
+                                    <a href="#" rel="modal:close">닫기</a>
+                                  </div>
+                                </div>
+                              </div>
                         </div>`
                     );
 
