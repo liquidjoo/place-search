@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.liquidjoo.placesearch.search.kakao.place.domain.ApiRequest;
 import com.github.liquidjoo.placesearch.search.kakao.place.domain.Documents;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,6 +30,7 @@ class KakaoPlaceServiceTest {
     private Documents documents;
 
     @Test
+    @DisplayName("검색결과 객체매핑 테스트")
     void searchTest() throws JsonProcessingException {
         documents = objectMapper.readValue(json, Documents.class);
         given(apiRequest.request("카카오프렌즈", 15, 1))

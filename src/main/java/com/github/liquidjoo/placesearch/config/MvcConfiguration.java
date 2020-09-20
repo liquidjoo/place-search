@@ -1,5 +1,6 @@
 package com.github.liquidjoo.placesearch.config;
 
+import com.github.liquidjoo.placesearch.local.place.interceptor.KeywordInterceptor;
 import com.github.liquidjoo.placesearch.user.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -14,5 +15,8 @@ public class MvcConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 .excludePathPatterns("/user/**")
                 .addPathPatterns("/**");
+
+        registry.addInterceptor(new KeywordInterceptor())
+                .addPathPatterns("/place/search");
     }
 }

@@ -1,29 +1,26 @@
 package com.github.liquidjoo.placesearch.local.place.domain;
 
-import org.springframework.stereotype.Component;
-
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 public class PopularKeywords {
 
     private List<Keyword> keywords;
 
-    PopularKeywords() {
-        this.keywords = new ArrayList<>();
+    public PopularKeywords(List<Keyword> keywords) {
+        this.keywords = keywords;
     }
 
     public void addKeyword(Keyword keyword) {
         if (this.keywords.contains(keyword)) {
-            keyword.increaseCount();
+            final Keyword foundedKeyword = this.keywords.stream()
+                    .filter(key -> key.equals(keyword))
+                    .findAny()
+                    .get();
+            foundedKeyword.increaseCount();
             return;
         }
         this.keywords.add(keyword);
-    }
-
-    public void addKeywords(List<Keyword> keywords) {
-        this.keywords.addAll(keywords);
     }
 
     public List<Keyword> getKeywords() {

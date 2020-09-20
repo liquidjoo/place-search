@@ -42,6 +42,10 @@
     </div>
 </form>
 
+<ul class="list-group" id="popularList">
+
+</ul>
+
 <div class="list-group" id="searchList">
 </div>
 
@@ -106,7 +110,6 @@
                 });
             }
         });
-
     }
 
     function paging(totalData, currentPage) {
@@ -154,6 +157,29 @@
     }
 
 </script>
+<script>
+    $(document).ready(function () {
 
+        $.ajax({
+            type: 'get',
+            url: '/place/popular/keywords',
+            contentType: "application/json",
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (json) {
+                $(`#popularList`).empty();
+                json.keywordsDocuments.map((item, index) => {
+                    $(`#popularList`).append(
+                        `<li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="badge badge-primary badge-pill">${item.count}</span>
+                            ${item.keyword}
+                        </li>`
+                    )
+                })
+            }
+        })
+    })
+</script>
 </body>
 </html>

@@ -2,7 +2,6 @@ package com.github.liquidjoo.placesearch;
 
 import com.github.liquidjoo.placesearch.local.place.domain.Keyword;
 import com.github.liquidjoo.placesearch.local.place.domain.KeywordRepository;
-import com.github.liquidjoo.placesearch.local.place.domain.PopularKeywords;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -13,11 +12,9 @@ import java.util.List;
 @Component
 public class PopularKeywordsRunner implements ApplicationRunner {
 
-    private PopularKeywords popularKeywords;
     private KeywordRepository keywordRepository;
 
-    public PopularKeywordsRunner(final PopularKeywords popularKeywords, final KeywordRepository keywordRepository) {
-        this.popularKeywords = popularKeywords;
+    public PopularKeywordsRunner(final KeywordRepository keywordRepository) {
         this.keywordRepository = keywordRepository;
     }
 
@@ -43,8 +40,5 @@ public class PopularKeywordsRunner implements ApplicationRunner {
         );
 
         keywordRepository.saveAll(keywords);
-
-        final List<Keyword> allKeywords = keywordRepository.findAll();
-        popularKeywords.addKeywords(allKeywords);
     }
 }

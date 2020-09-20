@@ -6,6 +6,7 @@ import com.github.liquidjoo.placesearch.local.place.application.PopularKeywordsR
 import com.github.liquidjoo.placesearch.local.place.domain.Keyword;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,5 +44,11 @@ public class PlaceController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+    @Scheduled(cron = "${keyword.cache.update.cron}")
+    public void updateKeyword() {
+        placeService.updateKeywordByCache();
     }
 }
