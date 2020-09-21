@@ -5,3 +5,33 @@ source 다운로드
 
 실행(프로젝트 디렉토리 안에서)  
  - ./gradlew bootRun
+
+
+
+
+```$xslt
+.
+├── java  
+│   └── com  
+│       └── github  
+│           └── liquidjoo  
+│               └── placesearch  
+│                   ├── PlaceSearchApplication.java  
+│                   ├── PopularKeywordsRunner.java  
+│                   ├── UserApplicationRunner.java  
+│                   ├── config  
+│                   ├── local  
+│                   ├── search  
+│                   ├── user  
+│                   ├── utils  
+│                   └── view  
+└── resources  
+    ├── application.properties  
+    ├── static  
+    │   ├── search  
+    │   │   └── search.html  
+    │   └── user  
+    │       └── login.html  
+    ├── templates  
+    └── user.sql
+```
