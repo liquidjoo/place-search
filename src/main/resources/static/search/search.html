@@ -20,8 +20,10 @@
             <div class="form-group mx-sm-3 mb-2">
                 <input type="text" class="form-control" id="query" name="query">
             </div>
-            <button type="button" class="btn btn-primary" onclick="searchPaging(null, 1)">Search</button>
+
+            <button id="searchButton" type="button" class="btn btn-primary" onclick="searchPaging(null, 1)">Search</button>
         </form>
+
     </div>
 
     <div class="row">
@@ -67,6 +69,13 @@
 
 <script>
 
+    $("#searchForm input").keydown(function (key) {
+        if (key.keyCode == 13) {
+            key.preventDefault();
+            searchPaging(null, 1);
+        }
+    });
+
     function searchPaging(keyword, page) {
 
         let query;
@@ -77,7 +86,6 @@
             query = keyword;
         }
 
-        console.log(keyword);
         const formData = {
             query: query,
             page: page
@@ -223,8 +231,9 @@
                     )
                 })
             }
-        })
-    })
+        });
+
+    });
 </script>
 </body>
 </html>
