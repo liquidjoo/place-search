@@ -31,7 +31,7 @@ public class PlaceService {
     }
 
     public PopularKeywordsResponse getKeywords() {
-        final PopularKeywords popularKeywords = new PopularKeywords(keywordRepository.findAll());
+        final PopularKeywords popularKeywords = new PopularKeywords(keywordRepository.findTop10ByOrderByCountDesc());
         final List<Keyword> keywords = popularKeywords.getKeywords();
         final List<PopularKeywordsResponse.KeywordsDocument> documents = keywords.stream()
                 .map(keyword -> new PopularKeywordsResponse.KeywordsDocument(keyword.getQuery(), keyword.getCount()))
@@ -42,7 +42,7 @@ public class PlaceService {
 
     @Transactional
     public void updateKeywordByCache() {
-        final PopularKeywords popularKeywords = new PopularKeywords(keywordRepository.findAll());
+        final PopularKeywords popularKeywords = new PopularKeywords(keywordRepository.findTop10ByOrderByCountDesc());
         final List<String> queries = KeywordCache.getQueries();
         log.info("keyword cache count = {}", queries.size());
         if (!queries.isEmpty()) {
