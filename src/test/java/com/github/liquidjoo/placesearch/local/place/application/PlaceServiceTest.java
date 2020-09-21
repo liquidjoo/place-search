@@ -51,7 +51,7 @@ class PlaceServiceTest {
 
     @Test
     void getPopularKeyword() {
-        given(keywordRepository.findAll())
+        given(keywordRepository.findTop10ByOrderByCountDesc())
                 .willReturn(initKeywords());
 
         final PopularKeywordsResponse actual = placeService.getKeywords();
