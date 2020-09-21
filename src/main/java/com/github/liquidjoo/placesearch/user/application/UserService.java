@@ -2,6 +2,7 @@ package com.github.liquidjoo.placesearch.user.application;
 
 import com.github.liquidjoo.placesearch.user.domain.User;
 import com.github.liquidjoo.placesearch.user.domain.UserRepository;
+import com.github.liquidjoo.placesearch.user.exception.UserInfoNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,14 +23,13 @@ public class UserService {
     }
 
     public UserResponse login(UserRequest userRequest) {
-
         final User user = userRepository.findByUserId(userRequest.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("not found user info"));
+                .orElseThrow(UserInfoNotFoundException::new);
 
         if (user.match(userRequest.getPassword())) {
             return new UserResponse(user.getUserId());
         }
 
-        throw new IllegalArgumentException("not found user info");
+        throw new UserInfoNotFoundException();
     }
 }

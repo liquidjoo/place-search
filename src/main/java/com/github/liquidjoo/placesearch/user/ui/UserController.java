@@ -3,8 +3,7 @@ package com.github.liquidjoo.placesearch.user.ui;
 import com.github.liquidjoo.placesearch.user.application.UserRequest;
 import com.github.liquidjoo.placesearch.user.application.UserResponse;
 import com.github.liquidjoo.placesearch.user.application.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 
@@ -29,8 +28,6 @@ public class UserController {
     @PostMapping(value = "/create")
     public ResponseEntity create(@RequestBody UserRequest userRequest) {
         try {
-            logger.info(userRequest.getUserId());
-            logger.info(userRequest.getPassword());
             final UserResponse userResponse = userService.create(userRequest);
             return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -45,6 +42,7 @@ public class UserController {
             createSession(httpServletRequest.getSession(true), userResponse);
             return new ResponseEntity<>(userResponse, HttpStatus.OK);
         } catch (Exception e) {
+            log.warn(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }
