@@ -31,7 +31,8 @@ public class PlaceService {
     }
 
     public PopularKeywordsResponse getKeywords() {
-        final List<Keyword> keywords = keywordRepository.findAll();
+        final PopularKeywords popularKeywords = new PopularKeywords(keywordRepository.findAll());
+        final List<Keyword> keywords = popularKeywords.getKeywords();
         final List<PopularKeywordsResponse.KeywordsDocument> documents = keywords.stream()
                 .map(keyword -> new PopularKeywordsResponse.KeywordsDocument(keyword.getQuery(), keyword.getCount()))
                 .collect(Collectors.toList());
