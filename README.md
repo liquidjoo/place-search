@@ -61,6 +61,6 @@ H2 데이터베이스 접속 정보
     │   └── user  
     │       └── login.html  
     ├── templates  
-    └── user.sql
+    └── scheme.sql
 ```
 
