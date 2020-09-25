@@ -9,29 +9,33 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
+    <title>Place-Search!</title>
 </head>
 <body>
-<h1>Hello, world!</h1>
-<div class="col align-self-center">
-    <form id="loginForm">
-        <div class="form-group">
-            <label for="userId" class="col-sm-2 col-form-label">UserId</label>
-            <div class="col">
-                <input type="text" class="form-control" id="userId" name="userId">
+<div class="row justify-content-center align-items-center vh-100">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <h4>Place Search!</h4>
+            </div>
+            <div class="card-body">
+                <div class="col align-self-center">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="userId">ID</label>
+                            <input type="text" class="form-control" id="userId" name="userId">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        <button id="loginButton" type="button" class="btn btn-primary" onclick="login()">Sign in</button>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="password" class="col-sm-2 col-form-label">Password</label>
-            <div class="col">
-                <input type="password" class="form-control" id="password" name="password">
-            </div>
-        </div>
-
-        <button id="loginButton" type="button" class="btn btn-primary" onclick="login()">Sign in</button>
-    </form>
+    </div>
 </div>
-
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -42,10 +46,10 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
 <script>
-    function login() {
-        var formData = {
-            userId: $(`#userId`).val(),
-            password: $(`#password`).val()
+    const login = () => {
+        const formData = {
+            userId: document.getElementById("userId").value,
+            password: document.getElementById("password").value
         };
 
         $.ajax({
@@ -58,19 +62,17 @@
                 alert("회원정보가 틀렸습니다.");
             },
             success: function (json) {
-
-                alert(json.userId +" 님 안녕하세요.");
+                alert(`${json.userId}님 안녕하세요.`);
                 window.location.href = "http://localhost:8080/search"
             }
         });
 
     }
 
-    $("#loginForm").keydown(function (key) {
-        if (key.keyCode == 13) {
+    $("#loginForm").keydown((event) => {
+        if (event.keyCode === 13) {
             login();
         }
-
     })
 </script>
 </body>
