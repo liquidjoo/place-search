@@ -11,6 +11,16 @@ source 다운로드
     - Id : tjdwn
     - Password : 1234
 
+데이터베이스 접속
+ - http://localhost:8080/h2
+ - JDBC URL = jdbc:h2:mem:test
+ - User Name = sa
+ - password = 빈값
+H2 데이터베이스 접속 정보  
+
+데이터베이스 접속 정보 확인
+![h2 image](./h2properties.png)
+
 --- 
 
 사용한 라이브러리
@@ -27,11 +37,6 @@ source 다운로드
              annotationProcessor 'org.projectlombok:lombok' 
      
 
----
-H2 데이터베이스 접속 정보
--
-데이터베이스 데이터 확인
-![h2 image](./h2properties.png)
 
 ---
 
@@ -61,6 +66,6 @@ H2 데이터베이스 접속 정보
     │   └── user  
     │       └── login.html  
     ├── templates  
-    └── user.sql
+    └── scheme.sql
 ```
 
